@@ -1,6 +1,6 @@
 ﻿namespace Rayzin.Tests;
 
-public class RShereTests
+public class RSphereTests
 {
     [Test]
     public void IntersectWithRay()
@@ -25,7 +25,6 @@ public class RShereTests
 
         CollectionAssert.AreEqual(new[]
         {
-            new RIntersection(5, s),
             new RIntersection(5, s)
         }, xs);
     }
@@ -65,5 +64,40 @@ public class RShereTests
             new RIntersection(-6.0, s),
             new RIntersection(-4.0, s)
         }, xs);
+    }
+
+    [Test]
+    public void DefaultSphereTranslationMatrix()
+    {
+        var s = new RSphere();
+        Assert.That(s.Transformation, Is.EqualTo(RMatrix.Identity4X4));
+    }
+
+    [Test]
+    public void ChangingSphereTransformation()
+    {
+        var s = new RSphere { Transformation = RTransform.Translate(2, 3, 4) };
+
+        Assert.That(s.Transformation, Is.EqualTo(RTransform.Translate(2, 3, 4)));
+    }
+
+    [Test]
+    public void IntersectScaledSphereWithRay()
+    {
+        var r = new RRay((0, 0, -5), (0, 0, 1));
+        var s = new RSphere { Transformation = RTransform.Scale(2, 2, 2) };
+        RIntersection[] xs = s.Intersect(r);
+
+        CollectionAssert.AreEqual(new[] { new RIntersection(3, s), new RIntersection(7, s) }, xs);
+    }
+    
+    [Test]
+    public void IntersectTranslatedSphereWithRay()
+    {
+        var r = new RRay((0, 0, -5), (0, 0, 1));
+        var s = new RSphere { Transformation = RTransform.Translate(5, 0, 0) };
+        RIntersection[] xs = s.Intersect(r);
+
+        CollectionAssert.IsEmpty(xs);
     }
 }
