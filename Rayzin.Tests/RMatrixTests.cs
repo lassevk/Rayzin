@@ -181,4 +181,22 @@ public class RMatrixTests
 
         Assert.That(a, Is.EqualTo(output));
     }
+
+    [Test]
+    public void Transpose()
+    {
+        var a = new RMatrix(0, 9, 3, 0, 9, 8, 0, 8, 1, 8, 5, 3, 0, 0, 5, 8);
+        RMatrix output = a.Transpose();
+
+        Assert.That(output, Is.EqualTo(new RMatrix(0, 9, 1, 0, 9, 8, 8, 0, 3, 0, 5, 5, 0, 8, 3, 8)));
+    }
+    
+    [Test]
+    public void Transpose_IdentityMatrix()
+    {
+        RMatrix a = RMatrix.Identity4X4;
+        RMatrix output = a.Transpose();
+
+        Assert.That(output, Is.EqualTo(RMatrix.Identity4X4));
+    }
 }

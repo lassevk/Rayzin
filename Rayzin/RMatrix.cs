@@ -116,4 +116,14 @@ public readonly record struct RMatrix
 
         return new RVector(result[0], result[1], result[2]);
     }
+
+    public RMatrix Transpose()
+    {
+        var values = new double[Size * Size];
+        for (var y = 0; y < Size; y++)
+            for (var x = 0; x < Size; x++)
+                values[x * Size + y] = _values[y * Size + x];
+
+        return new RMatrix(values);
+    }
 }
