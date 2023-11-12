@@ -118,7 +118,25 @@ public class RVectorTests
 
         Assert.That(v2, Is.EqualTo(new RVector(-1, 2, -3)));
     }
+
+    [Test]
+    [TestCase(1, -2, 3, 3.5, 3.5, -7, 10.5)]
+    public void Multiply_WithTestCases(double x, double y, double z, double scalar, double expectedX, double expectedY, double expectedZ)
+    {
+        RVector a = (x, y, z);
+        RVector b = a * scalar;
+
+        Assert.That(b, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
+    }
     
-    public void Multiply_WithTestCases()
-    {}
+    [Test]
+    [TestCase(3.5, -7, 10.5, 3.5, 1, -2, 3)]
+    [TestCase(1, -2, 3, 2, 0.5, -1, 1.5)]
+    public void Divide_WithTestCases(double x, double y, double z, double scalar, double expectedX, double expectedY, double expectedZ)
+    {
+        RVector a = (x, y, z);
+        RVector b = a / scalar;
+
+        Assert.That(b, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
+    }
 }

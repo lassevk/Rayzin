@@ -17,4 +17,7 @@ public readonly record struct RVector(double X, double Y, double Z)
     public override int GetHashCode() => throw new NotSupportedException();
 
     public bool Equals(RVector other) => REpsilon.Equals(X, other.X) && REpsilon.Equals(Y, other.Y) && REpsilon.Equals(Z, other.Z);
+
+    public static RVector operator *(RVector v, double scalar) => new RVector(v.X * scalar, v.Y * scalar, v.Z * scalar);
+    public static RVector operator /(RVector v, double scalar) => new RVector(v.X / scalar, v.Y / scalar, v.Z / scalar);
 }
