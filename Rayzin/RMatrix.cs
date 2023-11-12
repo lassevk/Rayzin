@@ -97,7 +97,7 @@ public readonly record struct RMatrix
         if (m.Size != 4)
             throw new InvalidOperationException("Can only multiply 4x4 matrices with points");
         
-        var tuple = new double[] { p.X, p.Y, p.Z, p.W };
+        var tuple = new[] { p.X, p.Y, p.Z, p.W };
         var result = m * tuple;
 
         if (!REpsilon.Equals(result[3], 1))
@@ -111,7 +111,7 @@ public readonly record struct RMatrix
         if (m.Size != 4)
             throw new InvalidOperationException("Can only multiply 4x4 matrices with vectors");
         
-        var tuple = new double[] { v.X, v.Y, v.Z, v.W };
+        var tuple = new[] { v.X, v.Y, v.Z, v.W };
         var result = m * tuple;
 
         if (!REpsilon.Equals(result[3], 0))
@@ -181,5 +181,28 @@ public readonly record struct RMatrix
         }
 
         return true;
+    }
+
+    public double Determinant()
+    {
+        if (Size == 2)
+            return _values[0] * _values[3] - _values[1] * _values[2];
+
+        var sum = 0.0;
+        for (var x = 0; x < Size; x++)
+            sum += _values[x] * CoFactor(0, x);
+
+        return sum;
+    }
+
+    public double Minor(int row, int column) => SubMatrix(row, column).Determinant();
+
+    public double CoFactor(int row, int column)
+    {
+        var minor = Minor(row, column);
+        if ((row + column) % 2 != 0)
+            minor = -minor;
+
+        return minor;
     }
 }

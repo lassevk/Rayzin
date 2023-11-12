@@ -217,4 +217,58 @@ public class RMatrixTests
 
         Assert.That(output, Is.EqualTo(new RMatrix(-6, 1, 6, -8, 8, 6, -7, -1, 1)));
     }
+
+    [Test]
+    public void Determinant_2x2()
+    {
+        var a = new RMatrix(1, 5, -3, 2);
+        var output = a.Determinant();
+
+        Assert.That(output, Is.EqualTo(17));
+    }
+
+    [Test]
+    public void Minor_3x3()
+    {
+        var a = new RMatrix(3, 5, 0, 2, -1, -7, 6, -1, 5);
+        RMatrix b = a.SubMatrix(1, 0);
+
+        var det = b.Determinant();
+        Assert.That(det, Is.EqualTo(25));
+
+        var minor = a.Minor(1, 0);
+        Assert.That(minor, Is.EqualTo(25));
+    }
+
+    [Test]
+    public void Cofactors_3x3()
+    {
+        var a = new RMatrix(3, 5, 0, 2, -1, -7, 6, -1, 5);
+
+        Assert.That(a.Minor(0, 0), Is.EqualTo(-12));
+        Assert.That(a.CoFactor(0, 0), Is.EqualTo(-12));
+        
+        Assert.That(a.Minor(1, 0), Is.EqualTo(25));
+        Assert.That(a.CoFactor(1, 0), Is.EqualTo(-25));
+    }
+
+    [Test]
+    public void Determinant_3x3()
+    {
+        var a = new RMatrix(1, 2, 6, -5, 8, -4, 2, 6, 4);
+        Assert.That(a.CoFactor(0, 0), Is.EqualTo(56));
+        Assert.That(a.CoFactor(0, 2), Is.EqualTo(-46));
+        Assert.That(a.Determinant(), Is.EqualTo(-196));
+    }
+    
+    [Test]
+    public void Determinant_4x4()
+    {
+        var a = new RMatrix(-2, -8, 3, 5, -3, 1, 7, 3, 1, 2, -9, 6, -6, 7, 7, -9);
+        Assert.That(a.CoFactor(0, 0), Is.EqualTo(690));
+        Assert.That(a.CoFactor(0, 1), Is.EqualTo(447));
+        Assert.That(a.CoFactor(0, 2), Is.EqualTo(210));
+        Assert.That(a.CoFactor(0, 3), Is.EqualTo(51));
+        Assert.That(a.Determinant(), Is.EqualTo(-4071));
+    }
 }
