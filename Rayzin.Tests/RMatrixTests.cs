@@ -199,4 +199,22 @@ public class RMatrixTests
 
         Assert.That(output, Is.EqualTo(RMatrix.Identity4X4));
     }
+
+    [Test]
+    public void SubMatrix_3x3()
+    {
+        var a = new RMatrix(1, 5, 0, -3, 2, 7, 0, 6, -3);
+        RMatrix output = a.SubMatrix(0, 2);
+
+        Assert.That(output, Is.EqualTo(new RMatrix(-3, 2, 0, 6)));
+    }
+    
+    [Test]
+    public void SubMatrix_4x4()
+    {
+        var a = new RMatrix(-6, 1, 1, 6, -8, 5, 8, 6, -1, 0, 8, 2, -7, 1, -1, 1);
+        RMatrix output = a.SubMatrix(2, 1);
+
+        Assert.That(output, Is.EqualTo(new RMatrix(-6, 1, 6, -8, 8, 6, -7, -1, 1)));
+    }
 }

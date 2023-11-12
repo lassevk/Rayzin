@@ -1,4 +1,7 @@
-﻿namespace Rayzin;
+﻿using System.Globalization;
+using System.Text;
+
+namespace Rayzin;
 
 public readonly record struct RMatrix
 {
@@ -125,5 +128,58 @@ public readonly record struct RMatrix
                 values[x * Size + y] = _values[y * Size + x];
 
         return new RMatrix(values);
+    }
+
+    public RMatrix SubMatrix(int row, int column)
+    {
+        if (row < 0 || row >= Size)
+            throw new ArgumentOutOfRangeException(nameof(row), $"row must be in the range of 0..{Size - 1}");
+        if (column < 0 || column >= Size)
+            throw new ArgumentOutOfRangeException(nameof(column), $"row must be in the range of 0..{Size - 1}");
+        if (Size == 2)
+            throw new NotSupportedException("SubMatrix is not supported for 2x2 matrices");
+
+        var values = new double[(Size - 1) * (Size - 1)];
+        var yOut = 0;
+        for (var y = 0; y < Size; y++)
+        {
+            if (y == row)
+                continue;
+            
+            var xOut = 0;
+            for (var x = 0; x < Size; x++)
+            {
+                if (x == column)
+                    continue;
+
+                values[yOut * (Size - 1) + xOut] = _values[y * Size + x];
+                xOut++;
+            }
+
+            yOut++;
+        }
+
+        return new RMatrix(values);
+    }
+
+    private bool PrintMembers(StringBuilder builder)
+    {
+        for (var y = 0; y < Size; y++)
+        {
+            if (y > 0)
+                builder.Append(' ');
+            
+            builder.Append('[');
+            for (var x = 0; x < Size; x++)
+            {
+                if (x > 0)
+                    builder.Append(' ');
+                
+                builder.Append(this[y, x].ToString("0.#####", CultureInfo.InvariantCulture));
+            }
+            builder.Append(']');
+        }
+
+        return true;
     }
 }

@@ -40,11 +40,11 @@ public readonly record struct RVector(double X, double Y, double Z)
     [ExcludeFromCodeCoverage]
     private bool PrintMembers(StringBuilder builder)
     {
-        builder.AppendFormat(X.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.AppendFormat(X.ToString("0.#####", CultureInfo.InvariantCulture));
         builder.Append(' ');
-        builder.AppendFormat(Y.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.AppendFormat(Y.ToString("0.#####", CultureInfo.InvariantCulture));
         builder.Append(' ');
-        builder.AppendFormat(Z.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.AppendFormat(Z.ToString("0.#####", CultureInfo.InvariantCulture));
         return true;
     }
 }
