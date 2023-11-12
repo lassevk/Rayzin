@@ -98,4 +98,52 @@ public class RTransformTests
         Assert.That(halfQuarter * p, Is.EqualTo(new RPoint(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0)));
         Assert.That(fullQuarter * p, Is.EqualTo(new RPoint(-1, 0, 0)));
     }
+
+    [Test]
+    public void ShearingMovesXInProportionToY()
+    {
+        RMatrix transform = RTransform.Shear(1, 0, 0, 0, 0, 0);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(5, 3, 4)));
+    }
+    
+    [Test]
+    public void ShearingMovesXInProportionToZ()
+    {
+        RMatrix transform = RTransform.Shear(0, 1, 0, 0, 0, 0);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(6, 3, 4)));
+    }
+    
+    [Test]
+    public void ShearingMovesYInProportionToX()
+    {
+        RMatrix transform = RTransform.Shear(0, 0, 1, 0, 0, 0);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(2, 5, 4)));
+    }
+    
+    [Test]
+    public void ShearingMovesYInProportionToZ()
+    {
+        RMatrix transform = RTransform.Shear(0, 0, 0, 1, 0, 0);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(2, 7, 4)));
+    }
+
+    [Test]
+    public void ShearingMovesZInProportionToX()
+    {
+        RMatrix transform = RTransform.Shear(0, 0, 0, 0, 1, 0);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(2, 3, 6)));
+    }
+
+    [Test]
+    public void ShearingMovesZInProportionToY()
+    {
+        RMatrix transform = RTransform.Shear(0, 0, 0, 0, 0, 1);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(2, 3, 7)));
+    }
 }

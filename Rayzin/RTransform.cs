@@ -25,4 +25,7 @@ public static class RTransform
         var c = Math.Cos(radians);
         return new RMatrix(c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     }
+
+    public static RMatrix Shear(double xy, double xz, double yx, double yz, double zx, double zy)
+        => new(1, xy, xz, 0, yx, 1, yz, 0, zx, zy, 1, 0, 0, 0, 0, 1);
 }
