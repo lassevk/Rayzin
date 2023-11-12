@@ -58,9 +58,120 @@ public class RCanvasTests
     [Test]
     public void PixelsAreCorrectlyStored()
     {
-        var canvas = new RCanvas(10, 20);
+        var canvas = new RCanvas(10, 20) { [2, 3] = RColor.Red };
 
-        canvas[2, 3] = RColor.Red;
         Assert.That(canvas[2, 3], Is.EqualTo(RColor.Red));
+    }
+
+    [Test]
+    public void Save_PPM8()
+    {
+        var canvas = new RCanvas(5, 3)
+        {
+            [0, 0] = (1.5, 0, 0),
+            [2, 1] = (0, 0.5, 0),
+            [4, 2] = (-0.5, 0, 1)
+        };
+
+        using var writer = new StringWriter();
+        canvas.Save(writer, RCanvasFileFormat.PPM8);
+
+        var expected = Utils.SplitLines(
+            """
+            P3
+            5 3
+            255
+            255 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 128 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 255
+            """);
+
+        var output = Utils.SplitLines(writer.ToString());
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+    
+    [Test]
+    public void Save_PPM16()
+    {
+        var canvas = new RCanvas(5, 3)
+        {
+            [0, 0] = (1.5, 0, 0),
+            [2, 1] = (0, 0.5, 0),
+            [4, 2] = (-0.5, 0, 1)
+        };
+
+        using var writer = new StringWriter();
+        canvas.Save(writer, RCanvasFileFormat.PPM16);
+
+        var expected = Utils.SplitLines(
+            """
+            P3
+            5 3
+            65535
+            65535 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 32768 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 65535
+            """);
+
+        var output = Utils.SplitLines(writer.ToString());
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void Save_ToFile_PPM16()
+    {
+        var canvas = new RCanvas(5, 3)
+        {
+            [0, 0] = (1.5, 0, 0),
+            [2, 1] = (0, 0.5, 0),
+            [4, 2] = (-0.5, 0, 1)
+        };
+
+        var tempFileName = Path.GetTempFileName();
+        canvas.Save(tempFileName, RCanvasFileFormat.PPM16);
+
+        var expected = Utils.SplitLines(
+            """
+            P3
+            5 3
+            65535
+            65535 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 32768 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 65535
+            """);
+
+        var output = File.ReadAllLines(tempFileName);
+        File.Delete(tempFileName);
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+    
+    [Test]
+    [TestCase(RCanvasFileFormat.PPM8)]
+    [TestCase(RCanvasFileFormat.PPM16)]
+    public void Save_NoLineLongerThan70(RCanvasFileFormat format)
+    {
+        var canvas = new RCanvas(500, 30);
+        for (var y = 0; y < canvas.Height; y++)
+            for (var x = 0; x < canvas.Width; x++)
+                canvas[x, y] = RColor.White;
+
+        using var writer = new StringWriter();
+        canvas.Save(writer, format);
+
+        var output = Utils.SplitLines(writer.ToString());
+
+        foreach (string line in output)
+            Assert.That(line.Length, Is.LessThanOrEqualTo(70));
+    }
+
+    [Test]
+    public void Save_UnknownFileFormat_ThrowsNotSupportedException()
+    {
+        var canvas = new RCanvas(5, 3);
+        using var writer = new StringWriter();
+        Assert.Throws<NotSupportedException>(() => canvas.Save(writer, (RCanvasFileFormat)65535));
     }
 }

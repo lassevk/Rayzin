@@ -45,4 +45,62 @@ public class RCanvas
             _pixels[y, x] = value;
         }
     }
+    
+    public void Save(TextWriter writer, RCanvasFileFormat format)
+    {
+        writer.WriteLine("P3");
+        writer.WriteLine($"{Width} {Height}");
+
+        var max = format switch
+        {
+            RCanvasFileFormat.PPM8 => 255,
+            RCanvasFileFormat.PPM16 => 65535,
+            _ => throw new NotSupportedException()
+        };
+
+        writer.WriteLine(max.ToString());
+
+        for (var y = 0; y < Height; y++)
+        {
+            var totalLength = 0;
+            for (var x = 0; x < Width; x++)
+            {
+                RColor pixel = this[x, y];
+                var pixelAsString = $"{ToInt(pixel.R)} {ToInt(pixel.G)} {ToInt(pixel.B)}";
+
+                int space = totalLength > 0 ? 1 : 0;
+                if (totalLength + space + pixelAsString.Length > 70)
+                {
+                    writer.WriteLine();
+                    totalLength = pixelAsString.Length;
+                }
+                else
+                {
+                    if (totalLength > 0)
+                    {
+                        writer.Write(" ");
+                        totalLength++;
+                    }
+
+                    totalLength += pixelAsString.Length;
+                }
+                writer.Write(pixelAsString);
+            }
+
+            writer.WriteLine();
+        }
+
+        return;
+
+        int ToInt(double value)
+        {
+            return Math.Min(max, Math.Max(0, (int)(value * max +  0.5)));
+        }
+    }
+
+    public void Save(string filename, RCanvasFileFormat format)
+    {
+        using StreamWriter writer = File.CreateText(filename);
+        Save(writer, format);
+    }
 }
