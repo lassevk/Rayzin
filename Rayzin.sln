@@ -1,8 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rayzin", "Rayzin\Rayzin.csproj", "{344A5995-80DD-4A16-BC5F-E46A218521BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rayzin.Tests", "Rayzin.Tests\Rayzin.Tests.csproj", "{E9B090C3-B4BC-4D17-9C6F-100AEC338E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rayzin.Sandbox.Console", "Rayzin.Sandbox.Console\Rayzin.Sandbox.Console.csproj", "{95AE5E6E-08B2-418E-ADCF-0C1B73B9CB5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{344A5995-80DD-4A16-BC5F-E46A218521BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344A5995-80DD-4A16-BC5F-E46A218521BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344A5995-80DD-4A16-BC5F-E46A218521BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344A5995-80DD-4A16-BC5F-E46A218521BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B090C3-B4BC-4D17-9C6F-100AEC338E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B090C3-B4BC-4D17-9C6F-100AEC338E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B090C3-B4BC-4D17-9C6F-100AEC338E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B090C3-B4BC-4D17-9C6F-100AEC338E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AE5E6E-08B2-418E-ADCF-0C1B73B9CB5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AE5E6E-08B2-418E-ADCF-0C1B73B9CB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AE5E6E-08B2-418E-ADCF-0C1B73B9CB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AE5E6E-08B2-418E-ADCF-0C1B73B9CB5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
