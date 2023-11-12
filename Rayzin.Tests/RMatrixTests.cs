@@ -201,6 +201,24 @@ public class RMatrixTests
     }
 
     [Test]
+    [TestCase(-1, 0)]
+    [TestCase(0, -1)]
+    [TestCase(3, 0)]
+    [TestCase(0, 3)]
+    public void SubMatrix_RowColumnOutOfBounds_ThrowsArgumentOutOfRangeException(int row, int column)
+    {
+        var a = new RMatrix(1, 5, 0, -3, 2, 7, 0, 6, -3);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = a.SubMatrix(row, column));
+    }
+
+    [Test]
+    public void SubMatrix_2x2_ThrowsNotSupportedException()
+    {
+        var a = new RMatrix(1, 2, 3, 4);
+        Assert.Throws<NotSupportedException>(() => _ = a.SubMatrix(0, 0));
+    }
+    
+    [Test]
     public void SubMatrix_3x3()
     {
         var a = new RMatrix(1, 5, 0, -3, 2, 7, 0, 6, -3);
@@ -270,5 +288,21 @@ public class RMatrixTests
         Assert.That(a.CoFactor(0, 2), Is.EqualTo(210));
         Assert.That(a.CoFactor(0, 3), Is.EqualTo(51));
         Assert.That(a.Determinant(), Is.EqualTo(-4071));
+    }
+
+    [Test]
+    public void IsInvertible_4x4()
+    {
+        var a = new RMatrix(6, 4, 4, 4, 5, 5, 7, 6, 4, -9, 3, -7, 9, 1, 7, -6);
+        Assert.That(a.Determinant(), Is.EqualTo(-2120));
+        Assert.That(a.IsInvertible(), Is.True);
+    }
+    
+    [Test]
+    public void IsNotInvertible_4x4()
+    {
+        var a = new RMatrix(-4, 2, -2, -3, 9, 6, 2, 6, 0, -5, 1, -5, 0, 0, 0, 0);
+        Assert.That(a.Determinant(), Is.EqualTo(0));
+        Assert.That(a.IsInvertible(), Is.False);
     }
 }

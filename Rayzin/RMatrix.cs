@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text;
 
 namespace Rayzin;
@@ -162,6 +163,7 @@ public readonly record struct RMatrix
         return new RMatrix(values);
     }
 
+    [ExcludeFromCodeCoverage]
     private bool PrintMembers(StringBuilder builder)
     {
         for (var y = 0; y < Size; y++)
@@ -205,4 +207,6 @@ public readonly record struct RMatrix
 
         return minor;
     }
+
+    public bool IsInvertible() => !REpsilon.Equals(Determinant(), 0);
 }
