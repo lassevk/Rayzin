@@ -6,6 +6,15 @@ public readonly record struct RVector(double X, double Y, double Z)
 
     public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z);
 
+    public RVector Normalized
+    {
+        get
+        {
+            double m = Magnitude;
+            return new RVector(X / m, Y / m, Z / m);
+        }
+    }
+
     public static implicit operator RVector(ValueTuple<double, double, double> t) => new RVector(t.Item1, t.Item2, t.Item3);
     public static implicit operator RVector(Tuple<double, double, double> t) => new RVector(t.Item1, t.Item2, t.Item3);
 
@@ -22,4 +31,8 @@ public readonly record struct RVector(double X, double Y, double Z)
 
     public static RVector operator *(RVector v, double scalar) => new RVector(v.X * scalar, v.Y * scalar, v.Z * scalar);
     public static RVector operator /(RVector v, double scalar) => new RVector(v.X / scalar, v.Y / scalar, v.Z / scalar);
+
+    public static double operator *(RVector v1, RVector v2) => v1.X * v1.Y + v1.Y * v2.Y + v1.Z * v2.Z;
+
+    public RVector Cross(RVector other) => new RVector(Y * other.Z - Z * other.Y, Z * other.X - X * other.Z, X * other.Y - Y * other.X);
 }

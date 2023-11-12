@@ -153,4 +153,43 @@ public class RVectorTests
 
         Assert.That(magnitude, Is.EqualTo(expected).Within(REpsilon.Threshold));
     }
+
+    [Test]
+    [TestCase(4, 0, 0, 1, 0, 0)]
+    [TestCase(-4, 0, 0, -1, 0, 0)]
+    [TestCase(0, 4, 0, 0, 1, 0)]
+    [TestCase(0, -4, 0, 0, -1, 0)]
+    [TestCase(0, 0, 4, 0, 0, 1)]
+    [TestCase(0, 0, -4, 0, 0, -1)]
+    [TestCase(1, 2, 3, 0.26726, 0.53452, 0.80178)]
+    public void Normalized_WithTestCases(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    {
+        RVector v = (x, y, z);
+        RVector output = v.Normalized;
+
+        Assert.That(output, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
+    }
+
+    [Test]
+    public void DotProduct()
+    {
+        RVector a = (1, 2, 3);
+        RVector b = (2, 3, 4);
+
+        double dot = a * b;
+
+        Assert.That(dot, Is.EqualTo(20));
+    }
+
+    [Test]
+    [TestCase(1, 2, 3, 2, 3, 4, -1, 2, -1)]
+    [TestCase(2, 3, 4, 1, 2, 3, 1, -2, 1)]
+    public void CrossProduct(double x1, double y1, double z1, double x2, double y2, double z2, double expectedX, double expectedY, double expectedZ)
+    {
+        RVector a = (x1, y1, z1);
+        RVector b = (x2, y2, z2);
+        RVector cross = a.Cross(b);
+
+        Assert.That(cross, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
+    }
 }
