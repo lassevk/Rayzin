@@ -11,4 +11,10 @@ public readonly record struct RVector(double X, double Y, double Z)
     public static RVector operator +(RVector v1, RVector v2) => new RVector(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
 
     public static RVector operator -(RVector v1, RVector v2) => new RVector(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z);
+
+    public static RVector operator -(RVector v) => new RVector(-v.X, -v.Y, -v.Z);
+    
+    public override int GetHashCode() => throw new NotSupportedException();
+
+    public bool Equals(RVector other) => REpsilon.Equals(X, other.X) && REpsilon.Equals(Y, other.Y) && REpsilon.Equals(Z, other.Z);
 }

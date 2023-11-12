@@ -3,6 +3,21 @@
 public class RVectorTests
 {
     [Test]
+    public void GetHashCode_ThrowsNotSupportedException()
+    {
+        RVector v = (1, 2, 3);
+
+        Assert.Throws<NotSupportedException>(() => _ = v.GetHashCode());
+    }
+
+    [Test]
+    public void DefaultConstructor()
+    {
+        RVector v = default;
+        Assert.That(v, Is.EqualTo(new RVector(0, 0, 0)));
+    }
+
+    [Test]
     public void Construct_FromValueTuple()
     {
         var v = (RVector)new ValueTuple<double, double, double>(1, 2, 3);
@@ -94,4 +109,16 @@ public class RVectorTests
 
         Assert.That(result, Is.EqualTo(new RVector(-2, -4, -6)));
     }
+
+    [Test]
+    public void Negate_Vector()
+    {
+        RVector v1 = (1, -2, 3);
+        RVector v2 = -v1;
+
+        Assert.That(v2, Is.EqualTo(new RVector(-1, 2, -3)));
+    }
+    
+    public void Multiply_WithTestCases()
+    {}
 }

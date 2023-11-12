@@ -3,6 +3,40 @@
 public class RPointTests
 {
     [Test]
+    public void GetHashCode_ThrowsNotSupportedException()
+    {
+        RPoint p = (1, 2, 3);
+
+        Assert.Throws<NotSupportedException>(() => _ = p.GetHashCode());
+    }
+
+    [Test]
+    public void DefaultConstructor()
+    {
+        RPoint p = default;
+        Assert.That(p, Is.EqualTo(RPoint.Origin));
+    }
+    
+    [Test]
+    [TestCase(0, 0, 0, true)]
+    [TestCase(1e-6, 0, 0, true)]
+    [TestCase(0, 1e-6, 0, true)]
+    [TestCase(0, 0, 1e-6, true)]
+    [TestCase(1e-4, 0, 0, false)]
+    [TestCase(0, 1e-4, 0, false)]
+    [TestCase(0, 0, 1e-4, false)]
+    public void Equals(double x, double y, double z, bool expected)
+    {
+        RPoint p1 = (0, 0, 0);
+        RPoint p2 = (x, y, z);
+
+        if (expected)
+            Assert.That(p1, Is.EqualTo(p2));
+        else
+            Assert.That(p1, Is.Not.EqualTo(p2));
+    }
+    
+    [Test]
     public void Construct_FromValueTuple()
     {
         var p = (RPoint)new ValueTuple<double, double, double>(1, 2, 3);
