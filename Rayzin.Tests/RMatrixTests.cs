@@ -59,4 +59,31 @@ public class RMatrixTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = matrix[y, x]);
     }
+
+    [Test]
+    public void Equals_EqualMatrices_ReturnsTrue()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
+        var b = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
+
+        Assert.That(a, Is.EqualTo(b));
+    }
+    
+    [Test]
+    public void Equals_DifferentMatrices_ReturnsFalse()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
+        var b = new RMatrix(2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+
+        Assert.That(a, Is.Not.EqualTo(b));
+    }
+
+    [Test]
+    public void Equals_DifferentSizedMatrices_ReturnsFalse()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        var b = new RMatrix(1, 2, 3, 4);
+
+        Assert.That(a, Is.Not.EqualTo(b));
+    }
 }
