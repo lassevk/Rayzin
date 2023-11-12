@@ -3,6 +3,26 @@
 public class RVectorTests
 {
     [Test]
+    public void Construct_FromValueTuple()
+    {
+        var v = (RVector)new ValueTuple<double, double, double>(1, 2, 3);
+
+        Assert.That(v.X, Is.EqualTo(1));
+        Assert.That(v.Y, Is.EqualTo(2));
+        Assert.That(v.Z, Is.EqualTo(3));
+    }
+
+    [Test]
+    public void Construct_FromTuple()
+    {
+        var v = (RVector)new Tuple<double, double, double>(1, 2, 3);
+
+        Assert.That(v.X, Is.EqualTo(1));
+        Assert.That(v.Y, Is.EqualTo(2));
+        Assert.That(v.Z, Is.EqualTo(3));
+    }
+
+    [Test]
     [TestCase(0, 0, 0)]
     [TestCase(1, 1, 1)]
     [TestCase(1.5, 2.5, 3.5)]
@@ -62,5 +82,16 @@ public class RVectorTests
         RVector sum = v1 + v2;
 
         Assert.That(sum, Is.EqualTo(new RVector(1, 1, 6)));
+    }
+
+    [Test]
+    public void Subtract_Vectors()
+    {
+        RVector v1 = (3, 2, 1);
+        RVector v2 = (5, 6, 7);
+
+        RVector result = v1 - v2;
+
+        Assert.That(result, Is.EqualTo(new RVector(-2, -4, -6)));
     }
 }
