@@ -366,4 +366,12 @@ public class RMatrixTests
         RMatrix c = a * b;
         Assert.That(c * b.Invert(), Is.EqualTo(a));
     }
+
+    [Test]
+    public void MultiplyTupleByIdentityMatrix()
+    {
+        var p = new RPoint(1, 2, 3);
+        RPoint output = RMatrix.Identity4X4 * p;
+        Assert.That(output, Is.EqualTo(p));
+    }
 }
