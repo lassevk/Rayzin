@@ -209,4 +209,18 @@ public readonly record struct RMatrix
     }
 
     public bool IsInvertible() => !REpsilon.Equals(Determinant(), 0);
+
+    public RMatrix Invert()
+    {
+        var det = Determinant();
+        if (REpsilon.Equals(det, 0))
+            throw new InvalidOperationException("The matrix is not invertible, it has a determinant of zero");
+        
+        var values = new double[Size * Size];
+        for (var y = 0; y < Size; y++)
+            for (var x = 0; x < Size; x++)
+                values[x * Size + y] = CoFactor(y, x) / det;
+
+        return new RMatrix(values);
+    }
 }
