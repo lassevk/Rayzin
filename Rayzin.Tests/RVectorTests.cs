@@ -139,4 +139,18 @@ public class RVectorTests
 
         Assert.That(b, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
     }
+
+    [Test]
+    [TestCase(1, 0, 0, 1)]
+    [TestCase(0, 1, 0, 1)]
+    [TestCase(0, 0, 1, 1)]
+    [TestCase(1, 2, 3, 3.74165738677)]
+    [TestCase(-1, -2, -3, 3.74165738677)]
+    public void Magnitude_WithTestCases(double x, double y, double z, double expected)
+    {
+        RVector v = (x, y, z);
+        double magnitude = v.Magnitude;
+
+        Assert.That(magnitude, Is.EqualTo(expected).Within(REpsilon.Threshold));
+    }
 }

@@ -3,7 +3,9 @@
 public readonly record struct RVector(double X, double Y, double Z)
 {
     public double W => 0;
-    
+
+    public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z);
+
     public static implicit operator RVector(ValueTuple<double, double, double> t) => new RVector(t.Item1, t.Item2, t.Item3);
     public static implicit operator RVector(Tuple<double, double, double> t) => new RVector(t.Item1, t.Item2, t.Item3);
 
