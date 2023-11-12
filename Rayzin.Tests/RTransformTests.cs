@@ -146,4 +146,35 @@ public class RTransformTests
         RPoint p = (2, 3, 4);
         Assert.That(transform * p, Is.EqualTo(new RPoint(2, 3, 7)));
     }
+
+    [Test]
+    public void IndividualTransformationsAreAppliedInSequence()
+    {
+        RPoint p = (1, 0, 1);
+        RMatrix a = RTransform.RotateX(Math.PI / 2);
+        RMatrix b = RTransform.Scale(5);
+        RMatrix c = RTransform.Translate(10, 5, 7);
+
+        RPoint p2 = a * p;
+        Assert.That(p2, Is.EqualTo(new RPoint(1, -1, 0)));
+
+        RPoint p3 = b * p2;
+        Assert.That(p3, Is.EqualTo(new RPoint(5, -5, 0)));
+
+        RPoint p4 = c * p3;
+        Assert.That(p4, Is.EqualTo(new RPoint(15, 0, 7)));
+    }
+    
+    [Test]
+    public void ChainedTransformationsMustBeAppliedInReverseOrder()
+    {
+        RPoint p = (1, 0, 1);
+        RMatrix a = RTransform.RotateX(Math.PI / 2);
+        RMatrix b = RTransform.Scale(5);
+        RMatrix c = RTransform.Translate(10, 5, 7);
+
+        RMatrix t = c * b * a;
+        RPoint p4 = t * p;
+        Assert.That(p4, Is.EqualTo(new RPoint(15, 0, 7)));
+    }
 }
