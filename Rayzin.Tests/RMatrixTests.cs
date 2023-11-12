@@ -32,18 +32,20 @@ public class RMatrixTests
     [Test]
     public void Constructor_3x3Matrix_CreatesCorrectMatrix()
     {
-        var matrix = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Assert.That(matrix[0, 0], Is.EqualTo(1));
-        Assert.That(matrix[1, 1], Is.EqualTo(5));
-        Assert.That(matrix[2, 2], Is.EqualTo(9));
+        var matrix = new RMatrix(-3, 5, 0, 1, -2, -7, 0, 1, 1);
+        Assert.That(matrix[0, 0], Is.EqualTo(-3));
+        Assert.That(matrix[1, 1], Is.EqualTo(-2));
+        Assert.That(matrix[2, 2], Is.EqualTo(1));
     }
     
     [Test]
     public void Constructor_2x2Matrix_CreatesCorrectMatrix()
     {
-        var matrix = new RMatrix(1, 2, 3, 4);
-        Assert.That(matrix[0, 0], Is.EqualTo(1));
-        Assert.That(matrix[1, 1], Is.EqualTo(4));
+        var matrix = new RMatrix(-3, 5, 1, -2);
+        Assert.That(matrix[0, 0], Is.EqualTo(-3));
+        Assert.That(matrix[0, 1], Is.EqualTo(5));
+        Assert.That(matrix[1, 0], Is.EqualTo(1));
+        Assert.That(matrix[1, 1], Is.EqualTo(-2));
     }
 
     [Test]
