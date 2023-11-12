@@ -96,4 +96,55 @@ public class RColorTests
 
         Assert.That(c2, Is.EqualTo(new RColor(4.3, -4.2, 8.3)));
     }
+
+    [Test]
+    [TestCase(0.9, 0.6, 0.75, 0.7, 0.1, 0.25, 1.6, 0.7, 1.0)]
+    public void Add_WithTestCases(double r1, double g1, double b1, double r2, double g2, double b2, double expectedR, double expectedG, double expectedB)
+    {
+        RColor c1 = (r1, g1, b1);
+        RColor c2 = (r2, g2, b2);
+        RColor expected = (expectedR, expectedG, expectedB);
+
+        RColor output = c1 + c2;
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+    
+    [Test]
+    [TestCase(0.9, 0.6, 0.75, 0.7, 0.1, 0.25, 0.2, 0.5, 0.5)]
+    public void Subtract_WithTestCases(double r1, double g1, double b1, double r2, double g2, double b2, double expectedR, double expectedG, double expectedB)
+    {
+        RColor c1 = (r1, g1, b1);
+        RColor c2 = (r2, g2, b2);
+        RColor expected = (expectedR, expectedG, expectedB);
+
+        RColor output = c1 - c2;
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+    
+    [Test]
+    [TestCase(0.2, 0.3, 0.4, 2, 0.4, 0.6, 0.8)]
+    public void Multiply_ByScalar_WithTestCases(double r, double g, double b, double scalar, double expectedR, double expectedG, double expectedB)
+    {
+        RColor c = (r, g, b);
+        RColor expected = (expectedR, expectedG, expectedB);
+
+        RColor output = c * scalar;
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
+    
+    [Test]
+    [TestCase(1, 0.2, 0.4, 0.9, 1, 0.1, 0.9, 0.2, 0.04)]
+    public void Subtract_TwoColors_WithTestCases(double r1, double g1, double b1, double r2, double g2, double b2, double expectedR, double expectedG, double expectedB)
+    {
+        RColor c1 = (r1, g1, b1);
+        RColor c2 = (r2, g2, b2);
+        RColor expected = (expectedR, expectedG, expectedB);
+
+        RColor output = c1 * c2;
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
 }
