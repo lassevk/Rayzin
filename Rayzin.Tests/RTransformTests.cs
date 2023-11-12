@@ -26,4 +26,37 @@ public class RTransformTests
         RVector v = (-3, 4, 5);
         Assert.That(transform * v, Is.EqualTo(v));
     }
+
+    [Test]
+    public void Scale_Point()
+    {
+        RMatrix transform = RTransform.Scale(2, 3, 4);
+        RPoint p = (-4, 6, 8);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(-8, 18, 32)));
+    }
+    
+    [Test]
+    public void Scale_Vector()
+    {
+        RMatrix transform = RTransform.Scale(2, 3, 4);
+        RVector v = (-4, 6, 8);
+        Assert.That(transform * v, Is.EqualTo(new RVector(-8, 18, 32)));
+    }
+    
+    [Test]
+    public void ScaleInverse_Vector()
+    {
+        RMatrix transform = RTransform.Scale(2, 3, 4);
+        RMatrix inv = transform.Invert();
+        RVector v = (-4, 6, 8);
+        Assert.That(inv * v, Is.EqualTo(new RVector(-2, 2, 2)));
+    }
+
+    [Test]
+    public void ScaleReflection_Point()
+    {
+        RMatrix transform = RTransform.Scale(-1, 1, 1);
+        RPoint p = (2, 3, 4);
+        Assert.That(transform * p, Is.EqualTo(new RPoint(-2, 3, 4)));
+    }
 }
