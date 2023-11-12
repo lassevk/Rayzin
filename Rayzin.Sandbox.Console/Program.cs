@@ -2,19 +2,21 @@
 
 using Rayzin;
 
-var canvas = new RCanvas(900, 550);
-RPoint start = (0, 1, 0);
-RVector velocity = new RVector(1, 1.8, 0).Normalize() * 11.25;
+var canvas = new RCanvas(1024, 1024);
+RPoint p = (0, -480, 0);
+RMatrix rotate = RTransform.RotateZ(Math.PI * 2 / 12);
 
-RVector gravity = (0, -0.1, 0);
-RVector wind = (-0.01, 0, 0);
-
-while (start.Y >= 0)
+for (var index = 0; index < 12; index++)
 {
-    canvas[(int)start.X, canvas.Height - (int)start.Y] = RColor.Red;
+    for (var dx = -5; dx <= 5; dx++)
+    {
+        for (var dy = -5; dy <= 5; dy++)
+        {
+            canvas[512 + (int)p.X + dx, 512 + (int)p.Y + dy] = RColor.Red;
+        }
+    }
 
-    start = start + velocity;
-    velocity += (gravity + wind);
+    p = rotate * p;
 }
 
 canvas.Save(@"D:\Temp\test.ppm");
