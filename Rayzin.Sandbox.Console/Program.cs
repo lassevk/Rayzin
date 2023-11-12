@@ -1,8 +1,20 @@
-﻿using Rayzin;
+﻿using System.Drawing;
 
-var canvas = new RCanvas(256, 256);
-for (var y = 0; y < 256; y++)
-    for (var x = 0; x < 256; x++)
-        canvas[x, y] = new RColor(x / 255.0, y / 255.0, 128);
-        
-canvas.Save(@"D:\Temp\test.ppm", RCanvasFileFormat.PPM8);
+using Rayzin;
+
+var canvas = new RCanvas(900, 550);
+RPoint start = (0, 1, 0);
+RVector velocity = new RVector(1, 1.8, 0).Normalized * 11.25;
+
+RVector gravity = (0, -0.1, 0);
+RVector wind = (-0.01, 0, 0);
+
+while (start.Y >= 0)
+{
+    canvas[(int)start.X, canvas.Height - (int)start.Y] = RColor.Red;
+
+    start = start + velocity;
+    velocity += (gravity + wind);
+}
+
+canvas.Save(@"D:\Temp\test.ppm");

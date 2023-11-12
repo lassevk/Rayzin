@@ -46,7 +46,7 @@ public class RCanvas
         }
     }
     
-    public void Save(TextWriter writer, RCanvasFileFormat format)
+    public void Save(TextWriter writer, RCanvasFileFormat format = RCanvasFileFormat.PPM8)
     {
         writer.WriteLine("P3");
         writer.WriteLine($"{Width} {Height}");
@@ -115,7 +115,7 @@ public class RCanvas
         }
     }
 
-    public void Save(string filename, RCanvasFileFormat format)
+    public void Save(string filename, RCanvasFileFormat format = RCanvasFileFormat.PPM8)
     {
         using StreamWriter writer = File.CreateText(filename);
         Save(writer, format);
