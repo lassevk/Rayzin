@@ -174,4 +174,29 @@ public class RCanvasTests
         using var writer = new StringWriter();
         Assert.Throws<NotSupportedException>(() => canvas.Save(writer, (RCanvasFileFormat)65535));
     }
+    
+    [Test]
+    public void Save_PPM8_WithLinesLessThan70()
+    {
+        var canvas = new RCanvas(10, 2);
+        canvas.Clear((1, 0.8, 0.6));
+
+        using var writer = new StringWriter();
+        canvas.Save(writer, RCanvasFileFormat.PPM8);
+
+        var expected = Utils.SplitLines(
+            """
+            P3
+            10 2
+            255
+            255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204
+            153 255 204 153 255 204 153 255 204 153 255 204 153
+            255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204
+            153 255 204 153 255 204 153 255 204 153 255 204 153
+            """);
+
+        var output = Utils.SplitLines(writer.ToString());
+
+        Assert.That(output, Is.EqualTo(expected));
+    }
 }

@@ -66,25 +66,42 @@ public class RCanvas
             for (var x = 0; x < Width; x++)
             {
                 RColor pixel = this[x, y];
-                var pixelAsString = $"{ToInt(pixel.R)} {ToInt(pixel.G)} {ToInt(pixel.B)}";
-
-                int space = totalLength > 0 ? 1 : 0;
-                if (totalLength + space + pixelAsString.Length > 70)
+                for (var channel = 0; channel < 3; channel++)
                 {
-                    writer.WriteLine();
-                    totalLength = pixelAsString.Length;
-                }
-                else
-                {
-                    if (totalLength > 0)
+                    var colorValue = channel switch
                     {
-                        writer.Write(" ");
-                        totalLength++;
-                    }
+                        0 => pixel.R,
+                        1 => pixel.G,
+                        2 => pixel.B,
+                        _ => 0
+                    };
 
-                    totalLength += pixelAsString.Length;
+                    var outputValue = (int)(colorValue * max + 0.5);
+                    if (outputValue < 0)
+                        outputValue = 0;
+                    else if (outputValue > max)
+                        outputValue = max;
+
+                    var outputString = outputValue.ToString();
+                    
+                    int space = totalLength > 0 ? 1 : 0;
+                    if (totalLength + space + outputString.Length > 70)
+                    {
+                        writer.WriteLine();
+                        totalLength = outputString.Length;
+                    }
+                    else
+                    {
+                        if (totalLength > 0)
+                        {
+                            writer.Write(" ");
+                            totalLength++;
+                        }
+
+                        totalLength += outputString.Length;
+                    }
+                    writer.Write(outputString);
                 }
-                writer.Write(pixelAsString);
             }
 
             writer.WriteLine();
@@ -102,5 +119,12 @@ public class RCanvas
     {
         using StreamWriter writer = File.CreateText(filename);
         Save(writer, format);
+    }
+
+    public void Clear(RColor color)
+    {
+        for (var y = 0; y < Height; y++)
+            for (var x = 0; x < Width; x++)
+                _pixels[y, x] = color;
     }
 }
