@@ -149,7 +149,7 @@ public class RVectorTests
     public void Magnitude_WithTestCases(double x, double y, double z, double expected)
     {
         RVector v = (x, y, z);
-        double magnitude = v.Magnitude;
+        var magnitude = v.Magnitude;
 
         Assert.That(magnitude, Is.EqualTo(expected).Within(REpsilon.Threshold));
     }
@@ -162,10 +162,10 @@ public class RVectorTests
     [TestCase(0, 0, 4, 0, 0, 1)]
     [TestCase(0, 0, -4, 0, 0, -1)]
     [TestCase(1, 2, 3, 0.26726, 0.53452, 0.80178)]
-    public void Normalized_WithTestCases(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    public void Normalize_WithTestCases(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
         RVector v = (x, y, z);
-        RVector output = v.Normalized;
+        RVector output = v.Normalize();
 
         Assert.That(output, Is.EqualTo(new RVector(expectedX, expectedY, expectedZ)));
     }
@@ -176,7 +176,7 @@ public class RVectorTests
         RVector a = (1, 2, 3);
         RVector b = (2, 3, 4);
 
-        double dot = a * b;
+        var dot = a * b;
 
         Assert.That(dot, Is.EqualTo(20));
     }

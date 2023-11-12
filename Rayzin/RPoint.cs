@@ -1,4 +1,8 @@
-﻿namespace Rayzin;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Text;
+
+namespace Rayzin;
 
 public readonly record struct RPoint(double X, double Y, double Z)
 {
@@ -19,4 +23,15 @@ public readonly record struct RPoint(double X, double Y, double Z)
     public override int GetHashCode() => throw new NotSupportedException();
 
     public bool Equals(RPoint other) => REpsilon.Equals(X, other.X) && REpsilon.Equals(Y, other.Y) && REpsilon.Equals(Z, other.Z);
+    
+    [ExcludeFromCodeCoverage]
+    private bool PrintMembers(StringBuilder builder)
+    {
+        builder.AppendFormat(X.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.Append(' ');
+        builder.AppendFormat(Y.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.Append(' ');
+        builder.AppendFormat(Z.ToString("#.#####", CultureInfo.InvariantCulture));
+        return true;
+    }
 }

@@ -98,7 +98,7 @@ public class RMatrixTests
     }
 
     [Test]
-    public void Multiply_MatrixWithTuple()
+    public void Multiply_MatrixWithPoint()
     {
         var a = new RMatrix(1, 2, 3, 4, 2, 4, 4, 2, 8, 6, 4, 1, 0, 0, 0, 1);
         var b = new RPoint(1, 2, 3);
@@ -109,7 +109,7 @@ public class RMatrixTests
     }
     
     [Test]
-    public void Multiply_3x3MatrixWithTuple_ThrowsInvalidOperationException()
+    public void Multiply_3x3MatrixWithPoint_ThrowsInvalidOperationException()
     {
         var a = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
         var b = new RPoint(1, 2, 3);
@@ -118,11 +118,67 @@ public class RMatrixTests
     }
     
     [Test]
-    public void Multiply_MatrixWithTuple_ThatDoesNotProduceAPoint_ThrowsInvalidOperationException()
+    public void Multiply_MatrixWithPoint_ThatDoesNotProduceAPoint_ThrowsInvalidOperationException()
     {
         var a = new RMatrix(1, 2, 3, 4, 2, 4, 4, 2, 8, 6, 4, 1, 0, 0, 1, 1);
         var b = new RPoint(1, 2, 3);
 
         Assert.Throws<InvalidOperationException>(() => _ = a * b);
+    }
+    
+    [Test]
+    public void Multiply_MatrixWithVector()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 2, 4, 4, 2, 8, 6, 4, 1, 0, 0, 0, 1);
+        var b = new RVector(1, 2, 3);
+
+        RVector result = a * b;
+
+        Assert.That(result, Is.EqualTo(new RVector(14, 22, 32)));
+    }
+    
+    [Test]
+    public void Multiply_3x3MatrixWithVector_ThrowsInvalidOperationException()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        var b = new RVector(1, 2, 3);
+
+        Assert.Throws<InvalidOperationException>(() => _ = a * b);
+    }
+    
+    [Test]
+    public void Multiply_MatrixWithVector_ThatDoesNotProduceAPoint_ThrowsInvalidOperationException()
+    {
+        var a = new RMatrix(1, 2, 3, 4, 2, 4, 4, 2, 8, 6, 4, 1, 0, 0, 1, 1);
+        var b = new RVector(1, 2, 3);
+
+        Assert.Throws<InvalidOperationException>(() => _ = a * b);
+    }
+
+    [Test]
+    public void Multiply_4x4MatrixWithIdentityMatrix_ReturnsOriginalMatrix()
+    {
+        var a = new RMatrix(0, 1, 2, 4, 1, 2, 4, 8, 2, 4, 8, 16, 4, 8, 16, 32);
+        RMatrix output = a * RMatrix.Identity4X4;
+
+        Assert.That(a, Is.EqualTo(output));
+    }
+    
+    [Test]
+    public void Multiply_3x3MatrixWithIdentityMatrix_ReturnsOriginalMatrix()
+    {
+        var a = new RMatrix(0, 1, 2, 1, 3, 6, 2, 12, 24);
+        RMatrix output = a * RMatrix.Identity3X3;
+
+        Assert.That(a, Is.EqualTo(output));
+    }
+    
+    [Test]
+    public void Multiply_2x2MatrixWithIdentityMatrix_ReturnsOriginalMatrix()
+    {
+        var a = new RMatrix(0, 1, 2, 4);
+        RMatrix output = a * RMatrix.Identity2X2;
+
+        Assert.That(a, Is.EqualTo(output));
     }
 }

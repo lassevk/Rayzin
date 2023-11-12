@@ -68,13 +68,14 @@ public class RCanvas
                 RColor pixel = this[x, y];
                 for (var channel = 0; channel < 3; channel++)
                 {
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
                     var colorValue = channel switch
                     {
                         0 => pixel.R,
                         1 => pixel.G,
-                        2 => pixel.B,
-                        _ => 0
+                        2 => pixel.B
                     };
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
 
                     var outputValue = (int)(colorValue * max + 0.5);
                     if (outputValue < 0)
@@ -105,13 +106,6 @@ public class RCanvas
             }
 
             writer.WriteLine();
-        }
-
-        return;
-
-        int ToInt(double value)
-        {
-            return Math.Min(max, Math.Max(0, (int)(value * max +  0.5)));
         }
     }
 

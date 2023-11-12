@@ -4,6 +4,10 @@ public readonly record struct RMatrix
 {
     private readonly double[] _values;
 
+    public static readonly RMatrix Identity2X2 = new RMatrix(1, 0, 0, 1);
+    public static readonly RMatrix Identity3X3 = new RMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    public static readonly RMatrix Identity4X4 = new RMatrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+
     public RMatrix(params double[] values)
     {
         _values = values ?? throw new ArgumentNullException(nameof(values));
@@ -97,5 +101,19 @@ public readonly record struct RMatrix
             throw new InvalidOperationException("Cannot multiply matrix with point, as the result is not a new point");
 
         return new RPoint(result[0], result[1], result[2]);
+    }
+    
+    public static RVector operator *(RMatrix m, RVector v)
+    {
+        if (m.Size != 4)
+            throw new InvalidOperationException("Can only multiply 4x4 matrices with vectors");
+        
+        var tuple = new double[] { v.X, v.Y, v.Z, v.W };
+        var result = m * tuple;
+
+        if (!REpsilon.Equals(result[3], 0))
+            throw new InvalidOperationException("Cannot multiply matrix with vector, as the result is not a new point");
+
+        return new RVector(result[0], result[1], result[2]);
     }
 }

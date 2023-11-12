@@ -1,4 +1,8 @@
-﻿namespace Rayzin;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Text;
+
+namespace Rayzin;
 
 public readonly record struct RVector(double X, double Y, double Z)
 {
@@ -6,13 +10,10 @@ public readonly record struct RVector(double X, double Y, double Z)
 
     public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z);
 
-    public RVector Normalized
+    public RVector Normalize()
     {
-        get
-        {
-            double m = Magnitude;
-            return new RVector(X / m, Y / m, Z / m);
-        }
+        var m = Magnitude;
+        return new RVector(X / m, Y / m, Z / m);
     }
 
     public static implicit operator RVector(ValueTuple<double, double, double> t) => new RVector(t.Item1, t.Item2, t.Item3);
@@ -35,4 +36,15 @@ public readonly record struct RVector(double X, double Y, double Z)
     public static double operator *(RVector v1, RVector v2) => v1.X * v1.Y + v1.Y * v2.Y + v1.Z * v2.Z;
 
     public RVector Cross(RVector other) => new RVector(Y * other.Z - Z * other.Y, Z * other.X - X * other.Z, X * other.Y - Y * other.X);
+
+    [ExcludeFromCodeCoverage]
+    private bool PrintMembers(StringBuilder builder)
+    {
+        builder.AppendFormat(X.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.Append(' ');
+        builder.AppendFormat(Y.ToString("#.#####", CultureInfo.InvariantCulture));
+        builder.Append(' ');
+        builder.AppendFormat(Z.ToString("#.#####", CultureInfo.InvariantCulture));
+        return true;
+    }
 }
