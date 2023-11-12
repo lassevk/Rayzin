@@ -59,4 +59,43 @@ public class RTransformTests
         RPoint p = (2, 3, 4);
         Assert.That(transform * p, Is.EqualTo(new RPoint(-2, 3, 4)));
     }
+
+    [Test]
+    public void RotateX_Point()
+    {
+        RPoint p = (0, 1, 0);
+        RMatrix halfQuarter = RTransform.RotateX(Math.PI / 4);
+        RMatrix fullQuarter = RTransform.RotateX(Math.PI / 2);
+        Assert.That(halfQuarter * p, Is.EqualTo(new RPoint(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2)));
+        Assert.That(fullQuarter * p, Is.EqualTo(new RPoint(0, 0, 1)));
+    }
+    
+    [Test]
+    public void RotateXInverse_Point()
+    {
+        RPoint p = (0, 1, 0);
+        RMatrix halfQuarter = RTransform.RotateX(Math.PI / 4);
+        RMatrix inv = halfQuarter.Invert();
+        Assert.That(inv * p, Is.EqualTo(new RPoint(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2)));
+    }
+    
+    [Test]
+    public void RotateY_Point()
+    {
+        RPoint p = (0, 0, 1);
+        RMatrix halfQuarter = RTransform.RotateY(Math.PI / 4);
+        RMatrix fullQuarter = RTransform.RotateY(Math.PI / 2);
+        Assert.That(halfQuarter * p, Is.EqualTo(new RPoint(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2)));
+        Assert.That(fullQuarter * p, Is.EqualTo(new RPoint(1, 0, 0)));
+    }
+    
+    [Test]
+    public void RotateZ_Point()
+    {
+        RPoint p = (0, 1, 0);
+        RMatrix halfQuarter = RTransform.RotateZ(Math.PI / 4);
+        RMatrix fullQuarter = RTransform.RotateZ(Math.PI / 2);
+        Assert.That(halfQuarter * p, Is.EqualTo(new RPoint(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0)));
+        Assert.That(fullQuarter * p, Is.EqualTo(new RPoint(-1, 0, 0)));
+    }
 }
