@@ -63,4 +63,46 @@ public class RTupleTests
 
         Assert.That(p3, Is.EqualTo(RTuple.Point(1, 1, 6)));
     }
+
+    [Test]
+    public void SubtractOperator_PointAndVector_ReturnsPoint()
+    {
+        var p1 = RTuple.Point(3, 2, 1);
+        var p2 = RTuple.Vector(5, 6, 7);
+
+        RTuple<int> p3 = p1 - p2;
+
+        Assert.That(p3, Is.EqualTo(RTuple.Point(-2, -4, -6)));
+    }
+
+    [Test]
+    public void SubtractOperator_VectorAndPoint_ThrowsInvalidOperationException()
+    {
+        var p1 = RTuple.Vector(3, 2, 1);
+        var p2 = RTuple.Point(5, 6, 7);
+
+        Assert.Throws<InvalidOperationException>(() => _ = p1 - p2);
+    }
+
+    [Test]
+    public void SubtractOperator_PointAndPoint_ReturnsVector()
+    {
+        var p1 = RTuple.Point(3, 2, 1);
+        var p2 = RTuple.Point(5, 6, 7);
+
+        RTuple<int> p3 = p1 - p2;
+
+        Assert.That(p3, Is.EqualTo(RTuple.Vector(-2, -4, -6)));
+    }
+
+    [Test]
+    public void SubtractOperator_VectorAndVector_ReturnsVector()
+    {
+        var p1 = RTuple.Vector(3, 2, 1);
+        var p2 = RTuple.Vector(5, 6, 7);
+
+        RTuple<int> p3 = p1 - p2;
+
+        Assert.That(p3, Is.EqualTo(RTuple.Vector(-2, -4, -6)));
+    }
 }

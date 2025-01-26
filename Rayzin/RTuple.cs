@@ -27,4 +27,17 @@ public readonly record struct RTuple<T>
             X = left.X + right.X, Y = left.Y + right.Y, Z = left.Z + right.Z, W = left.W + right.W,
         };
     }
+
+    public static RTuple<T> operator -(RTuple<T> left, RTuple<T> right)
+    {
+        if (left.IsVector && right.IsPoint)
+        {
+            throw new InvalidOperationException("Cannot subtract a point from a vector.");
+        }
+
+        return new RTuple<T>
+        {
+            X = left.X - right.X, Y = left.Y - right.Y, Z = left.Z - right.Z, W = left.W - right.W,
+        };
+    }
 }
