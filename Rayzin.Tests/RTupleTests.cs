@@ -159,4 +159,18 @@ public class RTupleTests
 
         Assert.That(output, Is.EqualTo(expected).Within(1E-5));
     }
+
+    [TestCase(4, 0, 0, 1, 0, 0)]
+    [TestCase(0, 4, 0, 0, 1, 0)]
+    [TestCase(0, 0, 4, 0, 0, 1)]
+    [TestCase(1, 2, 3, 0.2672612419124244, 0.5345224838248488, 0.8017837257372732)]
+    public void Normalize_WithTestCases(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    {
+        var vector = RTuple.Vector(x, y, z);
+
+        RTuple<double> output = vector.Normalize();
+
+        Assert.That(output, Is.EqualTo(RTuple.Vector(expectedX, expectedY, expectedZ)));
+        Assert.That(output.Magnitude(), Is.EqualTo(1.0).Within(1E-5));
+    }
 }
