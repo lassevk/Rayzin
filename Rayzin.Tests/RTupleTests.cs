@@ -115,4 +115,34 @@ public class RTupleTests
 
         Assert.That(n, Is.EqualTo(RTuple.Create(-1, 2, -3, 4)));
     }
+
+    [Test]
+    public void Multiply_TupleByScalar_ReturnsTuple()
+    {
+        var t = RTuple.Create<double>(1, -2, 3, -4);
+
+        RTuple<double> output = t * 3.5;
+
+        Assert.That(output, Is.EqualTo(RTuple.Create<double>(3.5, -7, 10.5, -14)));
+    }
+
+    [Test]
+    public void Multiply_ScalarByTuple_ReturnsTuple()
+    {
+        var t = RTuple.Create<double>(1, -2, 3, -4);
+
+        RTuple<double> output = 3.5 * t;
+
+        Assert.That(output, Is.EqualTo(RTuple.Create<double>(3.5, -7, 10.5, -14)));
+    }
+
+    [Test]
+    public void Divide_TupleByScalar_ReturnsTuple()
+    {
+        var t = RTuple.Create<double>(1, -2, 3, -4);
+
+        RTuple<double> output = t / 2.0;
+
+        Assert.That(output, Is.EqualTo(RTuple.Create<double>(0.5, -1, 1.5, -2)));
+    }
 }

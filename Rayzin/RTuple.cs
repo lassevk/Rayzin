@@ -46,4 +46,22 @@ public readonly record struct RTuple<T>
         {
             X = -operand.X, Y = -operand.Y, Z = -operand.Z, W = -operand.W,
         };
+
+    public static RTuple<T> operator *(RTuple<T> left, T right)
+        => new RTuple<T>
+        {
+            X = left.X * right, Y = left.Y * right, Z = left.Z * right, W = left.W * right,
+        };
+
+    public static RTuple<T> operator *(T left, RTuple<T> right)
+        => new RTuple<T>
+        {
+            X = left * right.X, Y = left * right.Y, Z = left * right.Z, W = left * right.W,
+        };
+
+    public static RTuple<T> operator /(RTuple<T> left, T right)
+        => new RTuple<T>
+        {
+            X = left.X / right, Y = left.Y / right, Z = left.Z / right, W = left.W / right,
+        };
 }
