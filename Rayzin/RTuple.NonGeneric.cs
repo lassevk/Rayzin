@@ -8,7 +8,7 @@ public static class RTuple
         where T : INumber<T>
         => new RTuple<T>
         {
-            X = z,
+            X = x,
             Y = y,
             Z = z,
             W = w,

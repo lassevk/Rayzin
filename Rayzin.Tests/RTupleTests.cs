@@ -145,4 +145,18 @@ public class RTupleTests
 
         Assert.That(output, Is.EqualTo(RTuple.Create<double>(0.5, -1, 1.5, -2)));
     }
+
+    [TestCase(1, 0, 0, 0, 1)]
+    [TestCase(0, 1, 0, 0, 1)]
+    [TestCase(0, 0, 1, 0, 1)]
+    [TestCase(1, 2, 3, 0, 3.7416573867739413)]
+    [TestCase(-1, -2, -3, 0, 3.7416573867739413)]
+    public void Magnitude_WithTestCases(double x, double y, double z, double w, double expected)
+    {
+        var tuple = RTuple.Create(x, y, z, w);
+
+        double output = tuple.Magnitude();
+
+        Assert.That(output, Is.EqualTo(expected).Within(1E-5));
+    }
 }
