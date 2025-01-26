@@ -105,4 +105,14 @@ public class RTupleTests
 
         Assert.That(p3, Is.EqualTo(RTuple.Vector(-2, -4, -6)));
     }
+
+    [Test]
+    public void NegateOperator_Tuple_ReturnsNegatedTuple()
+    {
+        var t = RTuple.Create(1, -2, 3, -4);
+
+        RTuple<int> n = -t;
+
+        Assert.That(n, Is.EqualTo(RTuple.Create(-1, 2, -3, 4)));
+    }
 }

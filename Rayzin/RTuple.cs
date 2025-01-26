@@ -40,4 +40,10 @@ public readonly record struct RTuple<T>
             X = left.X - right.X, Y = left.Y - right.Y, Z = left.Z - right.Z, W = left.W - right.W,
         };
     }
+
+    public static RTuple<T> operator -(RTuple<T> operand)
+        => new RTuple<T>
+        {
+            X = -operand.X, Y = -operand.Y, Z = -operand.Z, W = -operand.W,
+        };
 }
