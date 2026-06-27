@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Rayzin.Tests/Rayzin.Tests.csproj" />
+  <Project Path="Rayzin/Rayzin.csproj" />
+</Solution>
