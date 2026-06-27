@@ -60,4 +60,19 @@ public class RayzinVectorTests
 
         Assert.Equal(new RayzinVector(3.5, -7, 10.5), output, RayzinVectorApproximateComparer.Instance);
     }
+
+    [Theory]
+    [InlineData(1, 0, 0, 1)]
+    [InlineData(0, 1, 0, 1)]
+    [InlineData(0, 0, 1, 1)]
+    [InlineData(1, 2, 3, 3.741657386773941)]
+    [InlineData(-1, -2, -3, 3.741657386773941)]
+    public void Magnitude_ReturnsEuclidianLength(double x, double y, double z, double expected)
+    {
+        var vector = new RayzinVector(x, y, z);
+
+        double magnitude = vector.Magnitude;
+
+        Assert.Equal(expected, magnitude, RayzinConstants.Epsilon);
+    }
 }
