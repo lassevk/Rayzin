@@ -8,4 +8,7 @@ public readonly record struct RayzinVector(double X, double Y, double Z)
 
     public static RayzinPoint operator +(RayzinVector vector, RayzinPoint point)
         => new(vector.X + point.X, vector.Y + point.Y, vector.Z + point.Z);
+
+    public static RayzinVector operator -(RayzinVector vector1, RayzinVector vector2)
+        => new(vector1.X - vector2.X, vector1.Y - vector2.Y, vector1.Z - vector2.Z);
 }

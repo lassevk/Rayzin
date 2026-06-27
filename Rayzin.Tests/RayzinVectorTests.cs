@@ -19,4 +19,15 @@ public class RayzinVectorTests
 
         Assert.Equal(new RayzinPoint(1, 1, 6), output);
     }
+
+    [Fact]
+    public void RayzinVector_SubtractVector_ProducesVector()
+    {
+        var vector1 = new RayzinVector(3, 2, 1);
+        var vector2 = new RayzinVector(5, 6, 7);
+
+        RayzinVector output = vector1 - vector2;
+
+        Assert.Equal(new RayzinVector(-2, -4, -6), output);
+    }
 }

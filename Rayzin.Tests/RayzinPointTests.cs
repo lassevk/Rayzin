@@ -21,6 +21,17 @@ public class RayzinPointTests
     }
 
     [Fact]
+    public void RayzinPoint_SubtractPoint_ProducesVector()
+    {
+        var point1 = new RayzinPoint(3, 2, 1);
+        var point2 = new RayzinPoint(5, 6, 7);
+
+        RayzinVector output = point1 - point2;
+
+        Assert.Equal(new RayzinVector(-2, -4, -6), output);
+    }
+
+    [Fact]
     public void RayzinPoint_SubtractVector_ProducesNewPoint()
     {
         var point = new RayzinPoint(3, 2, 1);
