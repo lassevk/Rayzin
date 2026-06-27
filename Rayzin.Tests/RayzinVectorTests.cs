@@ -30,4 +30,14 @@ public class RayzinVectorTests
 
         Assert.Equal(new RayzinVector(-2, -4, -6), output);
     }
+
+    [Fact]
+    public void RayzinVector_Negate_ProducesNegativeVector()
+    {
+        var vector = new RayzinVector(1, -2, 3);
+
+        var output = -vector;
+
+        Assert.Equal(new RayzinVector(-1, 2, -3), output);
+    }
 }
