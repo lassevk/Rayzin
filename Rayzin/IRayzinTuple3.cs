@@ -1,6 +1,6 @@
 ﻿namespace Rayzin;
 
-public interface IRayzinTuple3<out T>
+public interface IRayzinTuple3<T>
     where T : IRayzinTuple3<T>
 {
     double X { get; }
