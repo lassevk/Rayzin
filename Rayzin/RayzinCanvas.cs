@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace Rayzin;
 
@@ -52,20 +53,46 @@ public class RayzinCanvas
         target.WriteLine($"{Width} {Height}");
         target.WriteLine("255");
 
+        var line = new StringBuilder();
+
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
             {
                 RayzinColor color = this[x, y].Clamp();
 
-                target.Write($"{(int)(color.X * 255 + 0.5)} {(int)(color.Y * 255 + 0.5)} {(int)(color.Z * 255 + 0.5)}");
-                if (x < Width - 1)
-                {
-                    target.Write(" ");
-                }
+                appendNumber((int)(color.X * 255 + 0.5));
+                appendNumber((int)(color.Y * 255 + 0.5));
+                appendNumber((int)(color.Z * 255 + 0.5));
             }
-            target.WriteLine();
 
+            if (line.Length > 0)
+            {
+                target.WriteLine(line);
+                line.Clear();
+            }
+        }
+
+        return;
+
+        void appendNumber(int value)
+        {
+            string extra = value.ToString();
+            if (line.Length + 1 + extra.Length > 70)
+            {
+                target.WriteLine(line);
+                line.Clear();
+                line.Append(value);
+            }
+            else
+            {
+                if (line.Length > 0)
+                {
+                    line.Append(' ');
+                }
+
+                line.Append(value);
+            }
         }
     }
 

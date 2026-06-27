@@ -63,4 +63,25 @@ public class RayzinCanvasTests
         Assert.Equal("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0", lines[4]);
         Assert.Equal("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255", lines[5]);
     }
+
+    [Fact]
+    public void SaveToPpm_NoLineExceeds70Characters()
+    {
+        var canvas = new RayzinCanvas(10, 2);
+        for (int y = 0; y < 2; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                canvas[x, y] = new RayzinColor(1, 0.8, 0.6);
+            }
+        }
+
+        string ppm = canvas.AsPpm();
+        string[] lines = ppm.Split('\n', '\r').Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
+
+        Assert.Equal("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", lines[3]);
+        Assert.Equal("153 255 204 153 255 204 153 255 204 153 255 204 153", lines[4]);
+        Assert.Equal("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", lines[5]);
+        Assert.Equal("153 255 204 153 255 204 153 255 204 153 255 204 153", lines[6]);
+    }
 }
