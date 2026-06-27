@@ -5,8 +5,8 @@ public class RayzinCanvasTests
     [Theory]
     [InlineData(32, 33)]
     [InlineData(33, 32)]
-    [InlineData(16, 200)]
-    [InlineData(200, 16)]
+    [InlineData(1, 200)]
+    [InlineData(200, 1)]
     public void Constructor_WithWidthAndHeightInsideOfLegalRange_ConstructsCanvasWithCorrectWidthAndHeight(int width, int height)
     {
         var canvas = new RayzinCanvas(width, height);
@@ -16,11 +16,8 @@ public class RayzinCanvasTests
     }
 
     [Theory]
-    [InlineData(9, 16)]
-    [InlineData(16, 9)]
     [InlineData(0, 16)]
-    [InlineData(9, 200)]
-    [InlineData(200, 9)]
+    [InlineData(16, 0)]
     public void Constructor_WithWidthOrHeightOutsideOfLegalRange_ThrowsArgumentOutOfRangeException(int width, int height)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new RayzinCanvas(width, height));
@@ -37,5 +34,33 @@ public class RayzinCanvasTests
         RayzinColor pixel = canvas[2, 3];
 
         Assert.Equal(RayzinColor.Red, pixel);
+    }
+
+    [Fact]
+    public void SaveToPpm_CorrectHeader()
+    {
+        var canvas = new RayzinCanvas(5, 3);
+        string ppm = canvas.AsPpm();
+
+        string[] lines = ppm.Split('\n', '\r').Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
+        Assert.Equal("P3", lines[0]);
+        Assert.Equal("5 3", lines[1]);
+        Assert.Equal("255", lines[2]);
+    }
+
+    [Fact]
+    public void SaveToPpm_CorrectPixelData()
+    {
+        var canvas = new RayzinCanvas(5, 3);
+        canvas[0, 0] = new RayzinColor(1.5, 0, 0);
+        canvas[2, 1] = new RayzinColor(0, 0.5, 0);
+        canvas[4, 2] = new RayzinColor(-0.5, 0, 1);
+
+        string ppm = canvas.AsPpm();
+        string[] lines = ppm.Split('\n', '\r').Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
+
+        Assert.Equal("255 0 0 0 0 0 0 0 0 0 0 0 0 0 0", lines[3]);
+        Assert.Equal("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0", lines[4]);
+        Assert.Equal("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255", lines[5]);
     }
 }

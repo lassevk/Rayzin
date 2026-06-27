@@ -8,8 +8,8 @@ public class RayzinCanvas
 
     public RayzinCanvas(int width, int height)
     {
-        ArgumentOutOfRangeException.ThrowIfLessThan(width, 10);
-        ArgumentOutOfRangeException.ThrowIfLessThan(height, 10);
+        ArgumentOutOfRangeException.ThrowIfLessThan(width, 1);
+        ArgumentOutOfRangeException.ThrowIfLessThan(height, 1);
 
         Width = width;
         Height = height;
@@ -38,5 +38,47 @@ public class RayzinCanvas
 
             _pixels[y * Width + x] = value;
         }
+    }
+
+    public void SavePpmToStream(Stream target)
+    {
+        using var writer = new StreamWriter(target);
+        SavePpmToTextWriter(writer);
+    }
+
+    public void SavePpmToTextWriter(TextWriter target)
+    {
+        target.WriteLine("P3");
+        target.WriteLine($"{Width} {Height}");
+        target.WriteLine("255");
+
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                RayzinColor color = this[x, y].Clamp();
+
+                target.Write($"{(int)(color.X * 255 + 0.5)} {(int)(color.Y * 255 + 0.5)} {(int)(color.Z * 255 + 0.5)}");
+                if (x < Width - 1)
+                {
+                    target.Write(" ");
+                }
+            }
+            target.WriteLine();
+
+        }
+    }
+
+    public void SavePpmToFile(string path)
+    {
+        using var writer = new StreamWriter(path);
+        SavePpmToTextWriter(writer);
+    }
+
+    public string AsPpm()
+    {
+        var writer = new StringWriter();
+        SavePpmToTextWriter(writer);
+        return writer.ToString();
     }
 }
