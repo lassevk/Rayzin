@@ -3,6 +3,17 @@
 public class RayzinVectorTests
 {
     [Fact]
+    public void Constructor_CreatesPointWithCorrectValues()
+    {
+        var vector = new RayzinVector(4.3, -4.2, 3.1);
+
+        Assert.Equal(4.3, vector.X, RayzinConstants.Epsilon);
+        Assert.Equal(-4.2, vector.Y, RayzinConstants.Epsilon);
+        Assert.Equal(3.1, vector.Z, RayzinConstants.Epsilon);
+        Assert.Equal(0.0, vector.W);
+    }
+
+    [Fact]
     public void RayzinVector_Create_CreatesVectorWithWEqualTo0()
     {
         var vector = RayzinVector.Create(1, 2, 3);
