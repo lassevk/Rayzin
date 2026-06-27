@@ -13,6 +13,9 @@
       <Compile Update="RayzinVectorApproximateComparer.cs">
         <DependentUpon>RayzinApproximateComparer.cs</DependentUpon>
       </Compile>
+      <Compile Update="RayzinColorApproximateComparer.cs">
+        <DependentUpon>RayzinApproximateComparer.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
