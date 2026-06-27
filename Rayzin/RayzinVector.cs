@@ -17,4 +17,13 @@ public readonly record struct RayzinVector(double X, double Y, double Z) : IRayz
     public static RayzinVector operator *(double scalar, RayzinVector vector) => new(vector.X * scalar, vector.Y * scalar, vector.Z * scalar);
 
     public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z);
+
+    public RayzinVector Normalized
+    {
+        get
+        {
+            double magnitude = Magnitude;
+            return new RayzinVector(X / magnitude, Y / magnitude, Z / magnitude);
+        }
+    }
 }

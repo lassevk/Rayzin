@@ -75,4 +75,27 @@ public class RayzinVectorTests
 
         Assert.Equal(expected, magnitude, RayzinConstants.Epsilon);
     }
+
+    [Theory]
+    [InlineData(4, 0, 0)]
+    [InlineData(1, 2, 3)]
+    public void Normalized_ReturnsUnitVector_WithMagnitude1(double x, double y, double z)
+    {
+        var vector = new RayzinVector(x, y, z);
+        RayzinVector normalized = vector.Normalized;
+
+        Assert.Equal(1, normalized.Magnitude, RayzinConstants.Epsilon);
+    }
+
+    [Theory]
+    [InlineData(4, 0, 0, 1, 0, 0)]
+    [InlineData(1, 2, 3, 0.2672612419124244, 0.5345224838248488, 0.8017837257372732)]
+    public void Normalized_ReturnsUnitVector(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    {
+        var vector = new RayzinVector(x, y, z);
+        var expected = new RayzinVector(expectedX, expectedY, expectedZ);
+        RayzinVector normalized = vector.Normalized;
+
+        Assert.Equal(expected, normalized, RayzinVectorApproximateComparer.Instance);
+    }
 }
