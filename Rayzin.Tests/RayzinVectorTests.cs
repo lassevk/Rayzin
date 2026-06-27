@@ -98,4 +98,16 @@ public class RayzinVectorTests
 
         Assert.Equal(expected, normalized, RayzinVectorApproximateComparer.Instance);
     }
+
+    [Theory]
+    [InlineData(1, 2, 3, 2, 3, 4, 20)]
+    public void DotProduct_ReturnsSumOfComponentProducts(double x1, double y1, double z1, double x2, double y2, double z2, double expected)
+    {
+        var vector1 = new RayzinVector(1, 2, 3);
+        var vector2 = new RayzinVector(2, 3, 4);
+
+        double output = vector1.DotProduct(vector2);
+
+        Assert.Equal(expected, output, RayzinConstants.Epsilon);
+    }
 }

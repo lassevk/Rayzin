@@ -26,4 +26,6 @@ public readonly record struct RayzinVector(double X, double Y, double Z) : IRayz
             return new RayzinVector(X / magnitude, Y / magnitude, Z / magnitude);
         }
     }
+
+    public double DotProduct(RayzinVector other) => X * other.X + Y * other.Y + Z * other.Z;
 }
