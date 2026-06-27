@@ -3,7 +3,7 @@
 public class RayzinVectorTests
 {
     [Fact]
-    public void RayzinVector_Create_CreatesPointWithWEqualTo0()
+    public void RayzinVector_Create_CreatesVectorWithWEqualTo0()
     {
         var vector = RayzinVector.Create(1, 2, 3);
         Assert.Equal(0.0, vector.W);
@@ -36,8 +36,28 @@ public class RayzinVectorTests
     {
         var vector = new RayzinVector(1, -2, 3);
 
-        var output = -vector;
+        RayzinVector output = -vector;
 
         Assert.Equal(new RayzinVector(-1, 2, -3), output);
+    }
+
+    [Fact]
+    public void RayzinVector_MultiplyByScalar_ProducesScaledVector()
+    {
+        var vector = new RayzinVector(1, -2, 3);
+
+        RayzinVector output = vector * 3.5;
+
+        Assert.Equal(new RayzinVector(3.5, -7, 10.5), output, RayzinVectorApproximateComparer.Instance);
+    }
+
+    [Fact]
+    public void Scalar_MultiplyByVector_ProducesScaledVector()
+    {
+        var vector = new RayzinVector(1, -2, 3);
+
+        RayzinVector output = 3.5 * vector;
+
+        Assert.Equal(new RayzinVector(3.5, -7, 10.5), output, RayzinVectorApproximateComparer.Instance);
     }
 }

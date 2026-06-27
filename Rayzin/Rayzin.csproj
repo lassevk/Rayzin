@@ -6,4 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Update="RayzinPointApproximateComparer.cs">
+        <DependentUpon>RayzinApproximateComparer.cs</DependentUpon>
+      </Compile>
+      <Compile Update="RayzinVectorApproximateComparer.cs">
+        <DependentUpon>RayzinApproximateComparer.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
