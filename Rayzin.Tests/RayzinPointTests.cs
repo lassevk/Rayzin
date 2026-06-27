@@ -41,4 +41,44 @@ public class RayzinPointTests
 
         Assert.Equal(new RayzinPoint(-2, -4, -6), output);
     }
+
+    [Theory]
+    [InlineData(1, 2, 3, "RayzinPoint { X = 1, Y = 2, Z = 3 }")]
+    [InlineData(6, 5, 4, "RayzinPoint { X = 6, Y = 5, Z = 4 }")]
+    public void ToString_ReturnsExpectedString(double x, double y, double z, string expected)
+    {
+        var point = new RayzinPoint(x, y, z);
+
+        string output = point.ToString();
+
+        Assert.Equal(expected, output);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, 1 + 1E-6, 2, 3)]
+    [InlineData(1, 2, 3, 1, 2 + 1E-6, 3)]
+    [InlineData(1, 2, 3, 1, 2, 3 + 1E-6)]
+    public void ApproximatelyEquals_WithinEpsilon_ReturnsTrue(double x1, double y1, double z1, double x2, double y2, double z2)
+    {
+        var point1 = new RayzinPoint(x1, y1, z1);
+        var point2 = new RayzinPoint(x2, y2, z2);
+
+        bool output = point1.ApproximatelyEquals(point2);
+
+        Assert.True(output);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, 1 + 1E-4, 2, 3)]
+    [InlineData(1, 2, 3, 1, 2 + 1E-4, 3)]
+    [InlineData(1, 2, 3, 1, 2, 3 + 1E-4)]
+    public void ApproximatelyEquals_OutsideEpsilon_ReturnsFalse(double x1, double y1, double z1, double x2, double y2, double z2)
+    {
+        var point1 = new RayzinPoint(x1, y1, z1);
+        var point2 = new RayzinPoint(x2, y2, z2);
+
+        bool output = point1.ApproximatelyEquals(point2);
+
+        Assert.False(output);
+    }
 }

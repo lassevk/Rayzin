@@ -1,11 +1,13 @@
-﻿namespace Rayzin;
+﻿using System.Text;
+
+namespace Rayzin;
 
 public readonly record struct RayzinVector(double X, double Y, double Z) : IRayzinTuple3<RayzinVector>, IRayzinTuple4<RayzinVector>
 {
     public static RayzinVector Create(double x, double y, double z) => new(x, y, z);
     public double W => 0.0;
 
-    public bool ApproximatelyEquals(RayzinVector other) => X.ApproximatelyEquals(other.X) && Y.ApproximatelyEquals(other.Y) && Z.ApproximatelyEquals(other.Z);
+    public bool ApproximatelyEquals(RayzinVector other) => RayzinVectorApproximateComparer.Instance.Equals(this, other);
 
     public static RayzinPoint operator +(RayzinVector vector, RayzinPoint point) => new(vector.X + point.X, vector.Y + point.Y, vector.Z + point.Z);
 
@@ -18,6 +20,12 @@ public readonly record struct RayzinVector(double X, double Y, double Z) : IRayz
 
     public double Magnitude => Math.Sqrt(X * X + Y * Y + Z * Z);
 
+    private bool PrintMembers(StringBuilder builder)
+    {
+        builder.Append($"X = {X}, Y = {Y}, Z = {Z}");
+        return true;
+    }
+
     public RayzinVector Normalized
     {
         get
@@ -28,4 +36,5 @@ public readonly record struct RayzinVector(double X, double Y, double Z) : IRayz
     }
 
     public double DotProduct(RayzinVector other) => X * other.X + Y * other.Y + Z * other.Z;
+    public RayzinVector CrossProduct(RayzinVector other) => new(Y * other.Z - Z * other.Y, Z * other.X - X * other.Z, X * other.Y - Y * other.X);
 }

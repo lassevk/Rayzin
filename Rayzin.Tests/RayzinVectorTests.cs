@@ -103,11 +103,67 @@ public class RayzinVectorTests
     [InlineData(1, 2, 3, 2, 3, 4, 20)]
     public void DotProduct_ReturnsSumOfComponentProducts(double x1, double y1, double z1, double x2, double y2, double z2, double expected)
     {
-        var vector1 = new RayzinVector(1, 2, 3);
-        var vector2 = new RayzinVector(2, 3, 4);
+        var vector1 = new RayzinVector(x1, y1, z1);
+        var vector2 = new RayzinVector(x2, y2, z2);
 
         double output = vector1.DotProduct(vector2);
 
         Assert.Equal(expected, output, RayzinConstants.Epsilon);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, 2, 3, 4, -1, 2, -1)]
+    [InlineData(2, 3, 4, 1, 2, 3, 1, -2, 1)]
+    public void CrossProduct_ReturnsExpectedVector(double x1, double y1, double z1, double x2, double y2, double z2, double expectedX, double expectedY, double expectedZ)
+    {
+        // Expected vector is perpendicular to both vectors, but this test hardcodes the expected result
+
+        var vector1 = new RayzinVector(x1, y1, z1);
+        var vector2 = new RayzinVector(x2, y2, z2);
+
+        var expected = new RayzinVector(expectedX, expectedY, expectedZ);
+        RayzinVector output = vector1.CrossProduct(vector2);
+
+        Assert.Equal(expected, output, RayzinVectorApproximateComparer.Instance);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, "RayzinVector { X = 1, Y = 2, Z = 3 }")]
+    [InlineData(6, 5, 4, "RayzinVector { X = 6, Y = 5, Z = 4 }")]
+    public void ToString_ReturnsExpectedString(double x, double y, double z, string expected)
+    {
+        var vector = new RayzinVector(x, y, z);
+
+        string output = vector.ToString();
+
+        Assert.Equal(expected, output);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, 1 + 1E-6, 2, 3)]
+    [InlineData(1, 2, 3, 1, 2 + 1E-6, 3)]
+    [InlineData(1, 2, 3, 1, 2, 3 + 1E-6)]
+    public void ApproximatelyEquals_WithinEpsilon_ReturnsTrue(double x1, double y1, double z1, double x2, double y2, double z2)
+    {
+        var vector1 = new RayzinVector(x1, y1, z1);
+        var vector2 = new RayzinVector(x2, y2, z2);
+
+        bool output = vector1.ApproximatelyEquals(vector2);
+
+        Assert.True(output);
+    }
+
+    [Theory]
+    [InlineData(1, 2, 3, 1 + 1E-4, 2, 3)]
+    [InlineData(1, 2, 3, 1, 2 + 1E-4, 3)]
+    [InlineData(1, 2, 3, 1, 2, 3 + 1E-4)]
+    public void ApproximatelyEquals_OutsideEpsilon_ReturnsFalse(double x1, double y1, double z1, double x2, double y2, double z2)
+    {
+        var vector1 = new RayzinVector(x1, y1, z1);
+        var vector2 = new RayzinVector(x2, y2, z2);
+
+        bool output = vector1.ApproximatelyEquals(vector2);
+
+        Assert.False(output);
     }
 }
